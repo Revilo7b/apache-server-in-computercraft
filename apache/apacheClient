@@ -1,0 +1,28 @@
+os.loadAPI("/apache/html")
+rednet.open("back")
+local function request(server, mode, file)
+  print("site: "..server)
+  local serverID = rednet.lookup("rednet", server)
+  
+  local req = {
+    method = "get",
+    callback = function()
+      print("Server answered request")
+    end,
+    id = os.getComputerID(),
+    path = file
+  }
+  rednet.send(serverID, req,"rednet")
+  local id, msg = rednet.receive("rednet", 15)
+  local b = msg.body
+  print("B: "..b)
+  local document = html.parsestr(b)
+  
+  print(textutils.serialize(document))
+  
+  if id == serverID then
+    print("got "..tostring(textutils.serialize(msg)).."from computer identified by"..tostring(id))
+  end
+end
+request("mysite", "get", "/")
+rednet.close("back")

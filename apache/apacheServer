@@ -1,0 +1,7 @@
+rednet.open("back")
+function host(site)
+  rednet.host(site, "rednet")
+  rednet.broadcast("Hello, world!", 'rednet')
+end
+host("mysite")
+rednet.close()
