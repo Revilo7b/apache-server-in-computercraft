@@ -1,0 +1,30 @@
+function process(table)
+  if type(table) == "table" then
+    for k, v in pairs(table) do
+      if type(k) == "table" then
+        -- it's the item's child
+        process(k)
+      end
+      if type(k) == "string" then
+        if v == nil then
+          -- innerHTML
+        end
+        if k == "_attr" then
+          -- v = attributes
+        elseif k == "_tag" then
+          -- handle the tag here
+        end
+      end
+    end
+  end
+end
+function render(table)
+  if not type(table) == "table" then
+    error("Expected table in function render(table table)") 
+  end
+  for key, item in pairs(table) do
+    
+    local value = item
+    print(tostring(key)..":"..value)
+  end  
+end
